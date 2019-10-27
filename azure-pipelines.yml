@@ -1,4 +1,5 @@
 pool:
+
   vmImage: 'Ubuntu-16.04'
   demands:
     - npm
@@ -57,3 +58,11 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    vstsFeed: '7c38e408-698e-4385-8fa6-17cd54faf3e5/c5a0d66d-4b70-4f15-bfcf-a91e00d5a12f'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '7c38e408-698e-4385-8fa6-17cd54faf3e5/c5a0d66d-4b70-4f15-bfcf-a91e00d5a12f'
